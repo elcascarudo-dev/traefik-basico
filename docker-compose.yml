@@ -8,17 +8,20 @@ networks:
     
 services:
   reverse-proxy:
-    # The official v2.0 Traefik docker image
-    image: traefik:v2.0
+    # The official v2.2 Traefik docker image
+    image: traefik:v2.2
     # Enables the web UI and tells Traefik to listen to docker
     command: --api.insecure=true --providers.docker
     ports:
       - "80:80"
+      - "443:443"
       # The Web UI (enabled by --api.insecure=true)
       - "8072:8080"
     labels: 
-      - "traefik.frontend.rule=Host:tu_diminio"
+      - "traefik.frontend.rule=Host:everis.int"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
+      - ./traefik.toml:/traefik.toml
+      - ./traefik_dynamic.toml:/traefik_dynamic.toml
     networks: 
       - "web"

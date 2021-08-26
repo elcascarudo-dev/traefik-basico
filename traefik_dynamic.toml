@@ -1,0 +1,10 @@
+[http.middlewares.simpleAuth.basicAuth]
+  users = ["admin:$apr1$EWPFjtAW$2m5EX64m882j0TxHBeAFR."]
+
+[http.routers.api]
+  rule = "Host(`monitor.everis.int`)"
+  entrypoints = ["websecure"]
+  middlewares = ["simpleAuth"]
+  service = "api@internal"
+  [http.routers.api.tls]
+    certResolver = "lets-encrypt"
